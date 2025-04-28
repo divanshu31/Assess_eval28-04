@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colab Study Notes App</title>
+
+    <style>
+        :root {
+            --bg-light : #f9f9f9;
+            --bg-dark : #121212;
+            --text-light : #333;
+            --text-dark : #f9f9f9;
+        }
+        body{
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            transition: 0.3s;
+        }
+        nav{
+            display: flex;
+            justify-content: space-around;
+            background: #6200ea;
+            padding: 1em;
+        }
+        nav button, nav a{
+            color: white;
+            background: none;
+            border: none;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        section{
+            display: flex;
+            flex-direction: column;
+            padding: 2em;
+        }
+        section.active{
+            display: block;
+        }
+        form div{
+            margin-bottom: 1em;
+        }
+        input, textarea, select, button {
+            width: 100%;
+            padding: 0.5em;
+            margin-top: 0.5em;
+            font-size: 1em;
+        }
+        .note-card{
+            background: #eee;
+            padding: 1em;
+            margin: 1em 0;
+            border-radius: 8px;
+        }
+        footer{
+            text-align: center;
+            padding: 1em;
+            background: #6200ea;
+            color: white;
+            margin-top: 2em;
+        }
+        body.dark{
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+        body.dark nav{
+            background: #3700b3;
+        }
+        body.dark .note-card{
+            background: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <button onclick="showPage('homePage')">Home</button>
+        <button onclick="showPage('createPage')">Create</button>
+        <button onclick="showPage('viewPage')">View</button>
+        <button onclick="showPage('settingsPage')">Settings</button>
+        <button onclick="showPage('toggleDarkMode()')">Toggle Dark Mode</button>
+    </nav>
+    <!-- Pages -->
+     <section id="homePage" class="active">
+        <h1>Welcome to the Collaborative Study Notes App</h1>
+        <p>Create, manage, and collaborate on your study notes.</p>
+     </section>
+
+     <section id="createPage">
+        <h1>Create New Study Note</h1>
+        <form id="noteForm">
+            <div>
+                <label>Title</label>
+                <input type="text" id="title" required>
+            </div>
+            <div>
+                <label>Description</label>
+                <textarea id="description" required></textarea>
+            </div>
+            <div>
+                <label>Tags/Topics</label>
+                <select id="tags" multiple>
+                    <option>Math</option>
+                    <option>Science</option>
+                    <option>History</option>
+                    <option>Geography</option>
+                    <option>Literature</option>
+                </select>
+            </div>
+            <div>
+                <label>Priority</label>
+                <select id="priority">
+                    <option>High</option>
+                    <option selected>Meidum</option>
+                    <option>Hard</option>
+                </select>
+            </div>
+            <div>
+                <label>Upload Image</label>
+                <input type="file" id="image" accept="image">
+            </div>
+            <button type="submit">Save Note</button>
+        </form>
+        <p id="Message"></p>
+     </section>
+
+     <section id="viewPage">
+        <h1>Your Study Notes</h1>
+        <input type="text" id="searchinput" placeholder="Search By Title..">
+        <div id="notesContainer"></div>
+     </section>
+
+     <section id="settingsPage">
+        <h1>App Settings</h1>
+        <button onclick="clearLocalNotes()">Clear All Local Drafts</button>
+     </section>
+
+    <footer>
+        <p>Contact Info : </p>
+    </footer>
+    
+    <script>
+        
+    </script>
+</body>
+</html>
