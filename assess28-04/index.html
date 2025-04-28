@@ -1,151 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colab Study Notes App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Collaborative Study Notes Web App">
+  <title>Study Notes App</title>
 
-    <style>
-        :root {
-            --bg-light : #f9f9f9;
-            --bg-dark : #121212;
-            --text-light : #333;
-            --text-dark : #f9f9f9;
-        }
-        body{
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-light);
-            transition: 0.3s;
-        }
-        nav{
-            display: flex;
-            justify-content: space-around;
-            background: #6200ea;
-            padding: 1em;
-        }
-        nav button, nav a{
-            color: white;
-            background: none;
-            border: none;
-            font-size: 1em;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        section{
-            display: flex;
-            flex-direction: column;
-            padding: 2em;
-        }
-        section.active{
-            display: block;
-        }
-        form div{
-            margin-bottom: 1em;
-        }
-        input, textarea, select, button {
-            width: 100%;
-            padding: 0.5em;
-            margin-top: 0.5em;
-            font-size: 1em;
-        }
-        .note-card{
-            background: #eee;
-            padding: 1em;
-            margin: 1em 0;
-            border-radius: 8px;
-        }
-        footer{
-            text-align: center;
-            padding: 1em;
-            background: #6200ea;
-            color: white;
-            margin-top: 2em;
-        }
-        body.dark{
-            background-color: var(--bg-dark);
-            color: var(--text-dark);
-        }
-        body.dark nav{
-            background: #3700b3;
-        }
-        body.dark .note-card{
-            background: #333;
-            color: #fff;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav>
-        <button onclick="showPage('homePage')">Home</button>
-        <button onclick="showPage('createPage')">Create</button>
-        <button onclick="showPage('viewPage')">View</button>
-        <button onclick="showPage('settingsPage')">Settings</button>
-        <button onclick="showPage('toggleDarkMode()')">Toggle Dark Mode</button>
-    </nav>
-    <!-- Pages -->
-     <section id="homePage" class="active">
-        <h1>Welcome to the Collaborative Study Notes App</h1>
-        <p>Create, manage, and collaborate on your study notes.</p>
-     </section>
-
-     <section id="createPage">
-        <h1>Create New Study Note</h1>
-        <form id="noteForm">
-            <div>
-                <label>Title</label>
-                <input type="text" id="title" required>
-            </div>
-            <div>
-                <label>Description</label>
-                <textarea id="description" required></textarea>
-            </div>
-            <div>
-                <label>Tags/Topics</label>
-                <select id="tags" multiple>
-                    <option>Math</option>
-                    <option>Science</option>
-                    <option>History</option>
-                    <option>Geography</option>
-                    <option>Literature</option>
-                </select>
-            </div>
-            <div>
-                <label>Priority</label>
-                <select id="priority">
-                    <option>High</option>
-                    <option selected>Meidum</option>
-                    <option>Hard</option>
-                </select>
-            </div>
-            <div>
-                <label>Upload Image</label>
-                <input type="file" id="image" accept="image">
-            </div>
-            <button type="submit">Save Note</button>
-        </form>
-        <p id="Message"></p>
-     </section>
-
-     <section id="viewPage">
-        <h1>Your Study Notes</h1>
-        <input type="text" id="searchinput" placeholder="Search By Title..">
-        <div id="notesContainer"></div>
-     </section>
-
-     <section id="settingsPage">
-        <h1>App Settings</h1>
-        <button onclick="clearLocalNotes()">Clear All Local Drafts</button>
-     </section>
-
-    <footer>
-        <p>Contact Info : </p>
-    </footer>
+  <style>
     
-    <script>
-        
-    </script>
+    :root {
+      --bg-light: #f9f9f9;
+      --bg-dark: #121212;
+      --text-light: #333;
+      --text-dark: #f9f9f9;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: 0.3s;
+    }
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background: #6200ea;
+      padding: 1em;
+    }
+    nav button, nav a {
+      color: white;
+      background: none;
+      border: none;
+      font-size: 1em;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    section {
+      
+      padding: 2em;
+    }
+    section.active {
+      display: block;
+    }
+    form div {
+      margin-bottom: 1em;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 0.5em;
+      margin-top: 0.5em;
+      font-size: 1em;
+    }
+    .note-card {
+      background: #eee;
+      padding: 1em;
+      margin: 1em 0;
+      border-radius: 8px;
+    }
+    footer {
+      text-align: center;
+      padding: 1em;
+      background: #6200ea;
+      color: white;
+      margin-top: 2em;
+    }
+    
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    body.dark nav {
+      background: #3700b3;
+    }
+    body.dark .note-card {
+      background: #333;
+      color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+    }
+   
+  </style>
+</head>
+
+<body>
+
+  
+  <nav>
+    <button onclick="showPage('homePage')">Home</button>
+    <button onclick="showPage('createPage')">Create</button>
+    <button onclick="showPage('viewPage')">View</button>
+    <button onclick="showPage('settingsPage')">Settings</button>
+    <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  </nav>
+
+  
+  <section id="homePage" class="active">
+    <h1>Welcome to the Collaborative Study Notes App!</h1>
+    <p>Create, manage, and collaborate on your study notes effectively.</p>
+  </section>
+
+  <section id="createPage">
+    <h1>Create New Study Note</h1>
+    <form id="noteForm">
+      <div>
+        <label>Title *</label>
+        <input type="text" id="title" required>
+      </div>
+      <div>
+        <label>Description *</label>
+        <textarea id="description" required></textarea>
+      </div>
+      <div>
+        <label>Tags/Topics</label>
+        <select id="tags" multiple>
+          <option>Math</option>
+          <option>Science</option>
+          <option>History</option>
+          <option>Geography</option>
+          <option>Literature</option>
+        </select>
+      </div>
+      <div>
+        <label>Priority</label>
+        <select id="priority">
+          <option>High</option>
+          <option selected>Medium</option>
+          <option>Low</option>
+        </select>
+      </div>
+      <div>
+        <label>Upload Image</label>
+        <input type="file" id="image" accept="image/*">
+      </div>
+      <button type="submit">Save Note</button>
+    </form>
+    <p id="message"></p>
+  </section>
+
+  <section id="viewPage">
+    <h1>Your Study Notes</h1>
+    <input type="text" id="searchInput" placeholder="Search by Title...">
+    <div id="notesContainer"></div>
+  </section>
+
+  <section id="settingsPage">
+    <h1>App Settings</h1>
+    <button onclick="clearLocalNotes()">Clear All Local Drafts</button>
+  </section>
+
+  <footer>
+    <p>Contact: support@studynotesapp.com</p>
+  </footer>
+
+  
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+  <script>
+   
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: ""
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    
+    function showPage(pageId) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+    }
+
+    
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+    }
+
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark');
+    }
+
+    
+    const noteForm = document.getElementById('noteForm');
+    const message = document.getElementById('message');
+    const notesContainer = document.getElementById('notesContainer');
+
+    noteForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('title').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const tags = Array.from(document.getElementById('tags').selectedOptions).map(opt => opt.value);
+      const priority = document.getElementById('priority').value;
+      const imageFile = document.getElementById('image').files[0];
+
+      if (!title || !description) {
+        message.textContent = "Please fill all required fields.";
+        message.style.color = 'red';
+        return;
+      }
+
+      try {
+        let imageUrl = '';
+
+        if (imageFile) {
+          const storageRef = storage.ref('notes/' + Date.now() + '_' + imageFile.name);
+          await storageRef.put(imageFile);
+          imageUrl = await storageRef.getDownloadURL();
+        }
+
+        const noteData = {
+          title,
+          description,
+          tags,
+          priority,
+          imageUrl,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        await db.collection('notes').add(noteData);
+        saveToLocalDrafts(noteData);
+
+        message.textContent = "Note saved successfully!";
+        message.style.color = 'green';
+        noteForm.reset();
+
+      } catch (err) {
+        console.error(err);
+        message.textContent = "Error saving note.";
+        message.style.color = 'red';
+      }
+    });
+
+    function saveToLocalDrafts(note) {
+      let drafts = JSON.parse(localStorage.getItem('draftNotes')) || [];
+      drafts.push(note);
+      localStorage.setItem('draftNotes', JSON.stringify(drafts));
+    }
+
+    
+    async function loadNotes() {
+      notesContainer.innerHTML = "";
+      const snapshot = await db.collection('notes').orderBy('createdAt', 'desc').get();
+      snapshot.forEach(doc => {
+        const note = doc.data();
+        const noteCard = `
+          <div class="note-card">
+            <h3>${note.title}</h3>
+            <p>${note.description}</p>
+            <small>Priority: ${note.priority}</small><br>
+            <small>Tags: ${note.tags.join(', ')}</small><br>
+            ${note.imageUrl ? `<img src="${note.imageUrl}" alt="Note Image" style="max-width:100%; margin-top:10px;">` : ''}
+          </div>
+        `;
+        notesContainer.innerHTML += noteCard;
+      });
+    }
+
+    document.getElementById('viewPage').addEventListener('click', loadNotes);
+
+    
+    document.getElementById('searchInput').addEventListener('input', async (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      const snapshot = await db.collection('notes').orderBy('createdAt', 'desc').get();
+      notesContainer.innerHTML = "";
+      snapshot.forEach(doc => {
+        const note = doc.data();
+        if (note.title.toLowerCase().includes(searchTerm)) {
+          const noteCard = `
+            <div class="note-card">
+              <h3>${note.title}</h3>
+              <p>${note.description}</p>
+              <small>Priority: ${note.priority}</small><br>
+              <small>Tags: ${note.tags.join(', ')}</small><br>
+              ${note.imageUrl ? `<img src="${note.imageUrl}" alt="Note Image" style="max-width:100%; margin-top:10px;">` : ''}
+            </div>
+          `;
+          notesContainer.innerHTML += noteCard;
+        }
+      });
+    });
+
+    
+    function clearLocalNotes() {
+      if (confirm('Are you sure you want to clear all local drafts?')) {
+        localStorage.removeItem('draftNotes');
+        alert('Local drafts cleared!');
+      }
+    }
+  </script>
+  
+
 </body>
 </html>
